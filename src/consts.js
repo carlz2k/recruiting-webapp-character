@@ -54,4 +54,6 @@ export const SKILL_LIST = [
     { name: 'Stealth', attributeModifier: 'Dexterity' },
     { name: 'Survival', attributeModifier: 'Wisdom' },
 
-]
+];
+
+export const ININITIAL_ATTRIBUTE_POINT = 10;
