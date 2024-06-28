@@ -1,6 +1,6 @@
 import { v4 as uuidv4 } from 'uuid';
 
-import { ATTRIBUTE_LIST, ININITIAL_ATTRIBUTE_POINT, SKILL_LIST } from "../consts";
+import { ATTRIBUTE_LIST, ININITIAL_ATTRIBUTE_POINT, INTELLIGENCE_ATTRIBUTE, INTELLIGENCE_MODIFIER_MULTIPLIER, SKILL_LIST } from "../consts";
 import { Attribute } from "./Attribute";
 import { Skill } from './Skill';
 
@@ -43,21 +43,35 @@ export class Character {
 
     skill?.addPoint(isIncreasing);
   }
+  
   resetAttributes() {
     this.attributes.forEach(
       (attr) => attr.reset()
     );
   }
 
+  getTotalSkillPointsWithoutAttributeModifers() {
+    return this.skills.reduce((acc, skill) => {
+      return acc + skill.points;
+    }, 0)
+  }
+
+  getTotalSkillPointsAvailable() {
+    const intelligenceAttributeModifier = this.attributes?.find(
+      (attr) => attr.name === INTELLIGENCE_ATTRIBUTE
+    )?.modifier;
+    return 10 + INTELLIGENCE_MODIFIER_MULTIPLIER * intelligenceAttributeModifier - this.getTotalSkillPointsWithoutAttributeModifers();
+  }
+
   static clone(original) {
     const newCharacter = new Character();
-    
+
     if (original?.id) {
       newCharacter.attributes = original.attributes?.map(
         (attr) => new Attribute(attr.name, attr.points, attr.modifier)
       );
       newCharacter.skill = original.skills?.map(
-        (skill)=> new Skill(skill.name, skill.points, skill.relatedAttribute)
+        (skill) => new Skill(skill.name, skill.points, skill.relatedAttribute)
       )
       newCharacter.id = original.id;
     }

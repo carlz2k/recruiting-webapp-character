@@ -1,3 +1,4 @@
+import { INTELLIGENCE_ATTRIBUTE, INTELLIGENCE_MODIFIER_MULTIPLIER } from "../consts";
 
 export const CharacterAttributesEdit = (
   {
@@ -6,6 +7,17 @@ export const CharacterAttributesEdit = (
   }
 ) => {
   const handleAttributeUpdate = (attributeName, isIncreasing) => {
+    if (attributeName === INTELLIGENCE_ATTRIBUTE) {
+      if (!isIncreasing && character?.getTotalSkillPointsAvailable() < INTELLIGENCE_MODIFIER_MULTIPLIER) {
+        // ASSUMPTION: avoid decreasing intelligence attribute if
+        // it is going to make total avialable skill points negative because then some of the skill points that already been
+        // spent will have to be reset, which will make the behaviour more complicated.
+        alert('Cannot decrease more Intelligence points because it will make total skill points avaiable negative.');
+
+        return;
+      }
+    }
+
     character.increaseAttribute(attributeName, isIncreasing ? 1 : -1);
     onCharacterUpdate(character);
   }
@@ -31,11 +43,12 @@ export const CharacterAttributesEdit = (
                     }
                   }>
                     <span>
-                      {attr.name}: {attr.points} (Modifier: {attr.modifier})<button onClick={() => {
-                        handleAttributeUpdate(attr.name, true)
-                      }}>+</button><button onClick={() => {
-                        handleAttributeUpdate(attr.name, false)
-                      }}>-</button>
+                      {attr.name}: {attr.points} (Modifier: {attr.modifier})<button
+                        onClick={() => {
+                          handleAttributeUpdate(attr.name, true)
+                        }}>+</button><button disabled={attr.modifier <= 0} onClick={() => {
+                          handleAttributeUpdate(attr.name, false)
+                        }}>-</button>
                     </span>
                   </td>
                 </tr>

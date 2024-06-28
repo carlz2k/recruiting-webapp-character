@@ -5,6 +5,7 @@ import { CharacterSkillsEdit } from "./CharacterSkillsEdit";
 
 export const CharacterEdit = (props) => {
   const [character] = useState(
+    // make original value immutable
     Character.clone(props?.originalCharacter)
   );
 

@@ -13,7 +13,7 @@ export class Skill {
     if (this.points < 0) this.points = 0;
   }
 
-  getTotalPoints() {
+  getTotalValue() {
     return this.points + this.relatedAttribute.modifier;
   }
 

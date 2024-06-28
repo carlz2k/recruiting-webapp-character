@@ -57,3 +57,7 @@ export const SKILL_LIST = [
 ];
 
 export const ININITIAL_ATTRIBUTE_POINT = 10;
+
+export const INTELLIGENCE_ATTRIBUTE = 'Intelligence';
+
+export const INTELLIGENCE_MODIFIER_MULTIPLIER = 4;
