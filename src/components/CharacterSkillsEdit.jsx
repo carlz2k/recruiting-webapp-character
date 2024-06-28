@@ -2,14 +2,14 @@
 export const CharacterSkillsEdit = (
   {
     character = {},
-    onCharacterUpdate,
+    onChange,
   }
 ) => {
   const totalAvaialbleSkillPoints = character?.getTotalSkillPointsAvailable();
 
   const handleSkillUpdate = (skillName, isIncreasing) => {
     character.increaseSkill(skillName, isIncreasing);
-    onCharacterUpdate(character);
+    onChange(character);
   }
 
   return (

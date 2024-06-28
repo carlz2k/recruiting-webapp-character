@@ -3,7 +3,7 @@ import { INTELLIGENCE_ATTRIBUTE, INTELLIGENCE_MODIFIER_MULTIPLIER, MAX_ATTRIBUTE
 export const CharacterAttributesEdit = (
   {
     character = {},
-    onCharacterUpdate,
+    onChange,
   }
 ) => {
   const handleAttributeUpdate = (attributeName, isIncreasing) => {
@@ -19,7 +19,7 @@ export const CharacterAttributesEdit = (
     }
 
     character.increaseAttribute(attributeName, isIncreasing ? 1 : -1);
-    onCharacterUpdate(character);
+    onChange(character);
   }
 
   return (

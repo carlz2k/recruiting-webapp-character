@@ -23,7 +23,7 @@ export const MainApp = () => {
   return (
     <div>
       <CharacterClass />
-      <CharacterEdit character={currentCharacter} onCharacterUpdate={updateCharacter} />
+      <CharacterEdit character={currentCharacter} onChange={updateCharacter} />
     </div>
   )
 };
