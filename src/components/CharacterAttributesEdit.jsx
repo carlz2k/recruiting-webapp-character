@@ -1,4 +1,4 @@
-import { INTELLIGENCE_ATTRIBUTE, INTELLIGENCE_MODIFIER_MULTIPLIER } from "../consts";
+import { INTELLIGENCE_ATTRIBUTE, INTELLIGENCE_MODIFIER_MULTIPLIER, MAX_ATTRIBUTE_POINTS } from "../consts";
 
 export const CharacterAttributesEdit = (
   {
@@ -44,6 +44,7 @@ export const CharacterAttributesEdit = (
                   }>
                     <span>
                       {attr.name}: {attr.points} (Modifier: {attr.modifier})<button
+                        disabled={character.getTotalAttributePoints() >= MAX_ATTRIBUTE_POINTS}
                         onClick={() => {
                           handleAttributeUpdate(attr.name, true)
                         }}>+</button><button disabled={attr.modifier <= 0} onClick={() => {
@@ -55,6 +56,7 @@ export const CharacterAttributesEdit = (
               )
             )
           }
+          <tr>Total Attributes: {character.getTotalAttributePoints()}</tr>
         </tbody>
       </table>
     </div>

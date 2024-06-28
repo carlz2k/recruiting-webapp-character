@@ -18,10 +18,11 @@ export class Character {
   }
 
   getTotalAttributePoints() {
-    this.attributes.reduce(
+    return this.attributes.reduce(
       (acc, current) => {
+        console.log(acc);
         return acc + current.points;
-      }
+      }, 0
     )
   }
 
@@ -43,24 +44,18 @@ export class Character {
 
     skill?.addPoint(isIncreasing);
   }
-  
+
   resetAttributes() {
     this.attributes.forEach(
       (attr) => attr.reset()
     );
   }
 
-  getTotalSkillPointsWithoutAttributeModifers() {
-    return this.skills.reduce((acc, skill) => {
-      return acc + skill.points;
-    }, 0)
-  }
-
   getTotalSkillPointsAvailable() {
     const intelligenceAttributeModifier = this.attributes?.find(
       (attr) => attr.name === INTELLIGENCE_ATTRIBUTE
     )?.modifier;
-    return 10 + INTELLIGENCE_MODIFIER_MULTIPLIER * intelligenceAttributeModifier - this.getTotalSkillPointsWithoutAttributeModifers();
+    return 10 + INTELLIGENCE_MODIFIER_MULTIPLIER * intelligenceAttributeModifier - this._getTotalSkillPointsSpent();
   }
 
   static clone(original) {
@@ -77,6 +72,12 @@ export class Character {
     }
 
     return newCharacter;
+  }
+
+  _getTotalSkillPointsSpent() {
+    return this.skills.reduce((acc, skill) => {
+      return acc + skill.points;
+    }, 0)
   }
 
   _createSkills() {
