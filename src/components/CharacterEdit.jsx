@@ -8,7 +8,6 @@ export const CharacterEdit = (props) => {
   const [shouldExpand, expand] = useState(false);
 
   const [character] = useState(
-    // make original value immutable
     props?.originalCharacter
   );
 

@@ -1,15 +1,13 @@
 # recruiting-webapp-character
 React coding test
 
-# Create a repository from this template
-- Click on `Use this template` dropdown on this repo page.
-- select `Create a new repository`
-- Under Owner, use your personal account and **NOT** `policyme-recruiting`
-- Write a name of the repo as `recruiting-webapp-character`
-- Select `Public` as visibility
-- Click `Create repository`
+# Assumptions
+- User will create only a handful of characters (under 10000); otherwise, there might be naming conflicts
+- No global state management library is used, for simplicity
 
 # Run the application
+- User is not allowed to decrease Intelligence attributes if there are no more available skill points available because once available skill points are negative, user will have to reset some of the skill points that have already been used;
+this thus add more complexity
 - Clone the newly created repo locally
 - Run the following command to install node modules
 ```
