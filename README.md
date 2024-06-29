@@ -2,6 +2,7 @@
 React coding test
 
 # Assumptions
+- Each attribute of a character is initialized to 10 when a new character is created.
 - User is not allowed to decrease Intelligence attributes if there are no more skill points available because once available skill points are negative, user will have to reset some of the skill points that have already been used;
 this thus adds more complexity
 - User will create only a handful of characters (under 10000); otherwise, there might be naming conflicts
