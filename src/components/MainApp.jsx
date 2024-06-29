@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useState } from "react";
 import { useCharacterService } from "../context/ServicesProvider";
 import { CharacterEdit } from "./CharacterEdit";
+import { PartySkillCheck } from "./PartySkillCheck";
 
 /**
  * the main view
@@ -53,12 +54,18 @@ export const MainApp = () => {
 
   return (
     <div>
+      {
+        !!Object.keys(characters)?.length && (
+          <PartySkillCheck characters={characters} />
+        )
+      }
+
       <button onClick={addNewCharacter}>
-        Add a new character
+        <h3>Add a new character</h3>
       </button>
 
       <button onClick={saveCharacter} disabled={isSaving}>
-        Save Characters
+        <h3>Save Characters</h3>
       </button>
 
       <table style={{

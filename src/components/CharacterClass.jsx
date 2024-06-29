@@ -13,11 +13,11 @@ export const CharacterClass = ({
     CHARACTER_CLASS_NAMES.map(
       (name) => (
         <div key={name}>
-          <a href="#" onClick={() => {
+          <label onClick={() => {
             setClassSelected(name);
-          }}>{character?.isClass(name) ? (<h2 style={{
+          }}>{character?.isClass(name) ? (<h4 style={{
             color: 'red'
-          }}>{name}</h2>) : (<h4>{name}</h4>)}</a>
+          }}>{name}</h4>) : (<h4>{name}</h4>)}</label>
           {
             (name === classSelected) ? (
               <CharacterClassDetail attributes={CLASS_LIST[name]} />
