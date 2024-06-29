@@ -1,6 +1,5 @@
 import { useEffect, useMemo, useState } from "react";
 import { useCharacterService } from "../context/ServicesProvider";
-import { CharacterClass } from "./CharacterClass";
 import { CharacterEdit } from "./CharacterEdit";
 
 /**
@@ -8,7 +7,7 @@ import { CharacterEdit } from "./CharacterEdit";
  * 
  * normally I'd like to use a state management library such as Redux
  * for managing states globally, but for a 2 hour exercise, we will just useState
- * to manage states locally
+ * to manage states locally.
  * 
  * @returns main view component
  */
