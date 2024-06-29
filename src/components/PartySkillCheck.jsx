@@ -38,10 +38,6 @@ export const PartySkillCheck = ({
   }
 
   useEffect(() => {
-
-  })
-
-  useEffect(() => {
     if (skill) {
       const characterWithHighestSkill = _getCharacterWithHighestSkillValue();
 
