@@ -2,12 +2,12 @@
 React coding test
 
 # Assumptions
+- User is not allowed to decrease Intelligence attributes if there are no more available skill points available because once available skill points are negative, user will have to reset some of the skill points that have already been used;
+this thus add more complexity
 - User will create only a handful of characters (under 10000); otherwise, there might be naming conflicts
 - No global state management library is used, for simplicity
 
 # Run the application
-- User is not allowed to decrease Intelligence attributes if there are no more available skill points available because once available skill points are negative, user will have to reset some of the skill points that have already been used;
-this thus add more complexity
 - Clone the newly created repo locally
 - Run the following command to install node modules
 ```
