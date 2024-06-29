@@ -11,7 +11,7 @@ export class Character {
     this.attributes = ATTRIBUTE_LIST.map(
       (attributeName) => {
         return new Attribute(
-          attributeName, ININITIAL_ATTRIBUTE_POINT, 0
+          attributeName, ININITIAL_ATTRIBUTE_POINT
         );
       }
     )
@@ -63,7 +63,7 @@ export class Character {
 
     if (original?.id) {
       newCharacter.attributes = original.attributes?.map(
-        (attr) => new Attribute(attr.name, attr.points, attr.modifier)
+        (attr) => new Attribute(attr.name, attr.points)
       );
       newCharacter.skills = original.skills?.map(
         (skill) => new Skill(skill.name, skill.points, skill.relatedAttribute)
@@ -80,8 +80,8 @@ export class Character {
     const attributeNames = Object.keys(dto.attributes || {});
     newCharacter.attributes = attributeNames?.map(
       (name) => {
-        const points = dto.attributes(name);
-        return new Attribute(name, points, Character._toModifier(points));
+        const points = dto.attributes[name];
+        return new Attribute(name, points);
       }
     );
 
@@ -95,7 +95,7 @@ export class Character {
           }
         );
 
-        return new Skill(name, dto.skills(name), relatedAttribute);
+        return new Skill(name, dto.skills[name], relatedAttribute);
       }
     )
     newCharacter.id = dto.id;
@@ -127,8 +127,8 @@ export class Character {
       }
     );
 
-    newCharacterDTO.id = dto.id;
-    newCharacterDTO.name = dto.name;
+    newCharacterDTO.id = character.id;
+    newCharacterDTO.name = character.name;
 
     return newCharacterDTO;
   }

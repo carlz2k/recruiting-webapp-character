@@ -1,23 +1,26 @@
 import { ININITIAL_ATTRIBUTE_POINT } from "../consts";
 
 export class Attribute {
-  constructor(name, points, modifier) {
+  constructor(name, points) {
     this.name = name;
     this.points = points;
-    this.modifier = modifier;
+    this._calculateModifier();
   }
 
-  add(modifierIncrement) {
-    if (this.points>0 || modifierIncrement > 0) {
-      this.modifier += modifierIncrement;
-      this.points += modifierIncrement * 2;
-    }
+  add(increment) {
+    this.points += increment;
 
     if (this.points < 0) this.points = 0;
+
+    this._calculateModifier();
   }
 
   reset() {
     this.points = ININITIAL_ATTRIBUTE_POINT;
     this.modifier = 0;
+  }
+
+  _calculateModifier() {
+    this.modifier = Math.floor((this.points - ININITIAL_ATTRIBUTE_POINT) / 2);
   }
 }
