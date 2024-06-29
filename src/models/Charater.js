@@ -5,7 +5,8 @@ import { Attribute } from "./Attribute";
 import { Skill } from './Skill';
 
 export class Character {
-  constructor() {
+  constructor(name = '') {
+    this.name = name;
     this.id = uuidv4();
     this.attributes = ATTRIBUTE_LIST.map(
       (attributeName) => {
@@ -20,7 +21,6 @@ export class Character {
   getTotalAttributePoints() {
     return this.attributes.reduce(
       (acc, current) => {
-        console.log(acc);
         return acc + current.points;
       }, 0
     )
@@ -65,7 +65,7 @@ export class Character {
       newCharacter.attributes = original.attributes?.map(
         (attr) => new Attribute(attr.name, attr.points, attr.modifier)
       );
-      newCharacter.skill = original.skills?.map(
+      newCharacter.skills = original.skills?.map(
         (skill) => new Skill(skill.name, skill.points, skill.relatedAttribute)
       )
       newCharacter.id = original.id;
@@ -74,10 +74,69 @@ export class Character {
     return newCharacter;
   }
 
+  static fromDTO(dto) {
+    const newCharacter = new Character();
+
+    const attributeNames = Object.keys(dto.attributes || {});
+    newCharacter.attributes = attributeNames?.map(
+      (name) => {
+        const points = dto.attributes(name);
+        return new Attribute(name, points, Character._toModifier(points));
+      }
+    );
+
+    const skillsNames = Object.keys(dto.skills || {});
+    newCharacter.skills = skillsNames?.map(
+      (name) => {
+        const relatedAttribute = newCharacter.attributes.find(
+          (attr) => {
+            const attrName = SKILL_LIST.find((skill) => skill.name === name).attributeModifier;
+            return attr.name === attrName;
+          }
+        );
+
+        return new Skill(name, dto.skills(name), relatedAttribute);
+      }
+    )
+    newCharacter.id = dto.id;
+    newCharacter.name = dto.name;
+
+    return newCharacter;
+  }
+
+  static toDTO(character) {
+    const newCharacterDTO = {};
+
+    const attributes = character.attributes;
+
+    newCharacterDTO.attributes = {};
+
+    attributes?.forEach(
+      (attr) => {
+        newCharacterDTO.attributes[attr.name] = attr.points;
+      }
+    );
+
+    const skills = character.skills;
+
+    newCharacterDTO.skills = {};
+
+    skills?.forEach(
+      (skill) => {
+        newCharacterDTO.skills[skill.name] = skill.points;
+      }
+    );
+
+    newCharacterDTO.id = dto.id;
+    newCharacterDTO.name = dto.name;
+
+    return newCharacterDTO;
+  }
+
   _getTotalSkillPointsSpent() {
     return this.skills.reduce((acc, skill) => {
       return acc + skill.points;
-    }, 0)
+    }, 0);
   }
 
   _createSkills() {
@@ -92,5 +151,9 @@ export class Character {
         );
       }
     )
+  }
+
+  static _toModifier(points) {
+    return (points - ININITIAL_ATTRIBUTE_POINT) / 2;
   }
 }

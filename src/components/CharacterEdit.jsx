@@ -1,27 +1,36 @@
-import { useState } from "react";
-import { Character } from "../models/Charater";
+import { useEffect, useState } from "react";
 import { CharacterAttributesEdit } from "./CharacterAttributesEdit";
 import { CharacterSkillsEdit } from "./CharacterSkillsEdit";
 
 export const CharacterEdit = (props) => {
+  const [shouldExpand, expand] = useState(false);
+
   const [character] = useState(
     // make original value immutable
-    props?.originalCharacter || new Character()
+    props?.originalCharacter
   );
 
   return (
     <div>
-      <table style={{
-        borderCollapse: 'collapse',
-        border: 'none'
-      }}>
-        <tbody>
-          <tr>
-            <td><CharacterAttributesEdit {...props} character={character} /></td>
-            <td><CharacterSkillsEdit {...props} character={character} /></td>
-          </tr>
-        </tbody>
-      </table>
+      <span><h2>{character.name}</h2> <button onClick={()=>{
+        expand(!shouldExpand);
+      }}>Expand</button></span>
+      {
+        shouldExpand && (
+          <table style={{
+            borderCollapse: 'collapse',
+            border: 'none'
+          }}>
+
+            <tbody>
+              <tr>
+                <td><CharacterAttributesEdit {...props} character={character} /></td>
+                <td><CharacterSkillsEdit {...props} character={character} /></td>
+              </tr>
+            </tbody>
+          </table>
+        )
+      }
     </div>
   );
 };

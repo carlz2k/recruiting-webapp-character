@@ -47,7 +47,7 @@ export const CharacterAttributesEdit = (
                         disabled={character.getTotalAttributePoints() >= MAX_ATTRIBUTE_POINTS}
                         onClick={() => {
                           handleAttributeUpdate(attr.name, true)
-                        }}>+</button><button disabled={attr.modifier <= 0} onClick={() => {
+                        }}>+</button><button disabled={attr.points <= 0} onClick={() => {
                           handleAttributeUpdate(attr.name, false)
                         }}>-</button>
                     </span>

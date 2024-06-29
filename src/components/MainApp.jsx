@@ -1,4 +1,5 @@
-import { useState } from "react";
+import { useMemo, useState } from "react";
+import { useCharacterService } from "../context/ServicesProvider";
 import { CharacterClass } from "./CharacterClass";
 import { CharacterEdit } from "./CharacterEdit";
 
@@ -12,18 +13,47 @@ import { CharacterEdit } from "./CharacterEdit";
  * @returns main view component
  */
 export const MainApp = () => {
-  const [characters, updateCharacters] = useState({});
-  const allIds = Object.keys(characters);
+  const characterService = useCharacterService();
 
-  const currentCharacter = allIds.length ? characters[allIds[0]] : undefined;
+  const [characters, updateCharacters] = useState({});
+
+  const characterList = useMemo(() => {
+    return Object.values(characters);
+  }, [characters]);
+
   const updateCharacter = (character) => {
-    updateCharacters({...characters, [character.id]: character});
+    updateCharacters({ ...characters, [character.id]: character });
   };
+
+  const addNewCharacter = () => {
+    const newCharacter = characterService.create();
+    updateCharacter(newCharacter);
+  }
 
   return (
     <div>
+      <button onClick={addNewCharacter}>
+        Add a new character
+      </button>
       <CharacterClass />
-      <CharacterEdit character={currentCharacter} onChange={updateCharacter} />
+
+      <table style={{
+        borderCollapse: 'collapse',
+        border: 'none'
+      }}>
+        {
+          characterList.map(
+            (character) => (
+              <tr key={character.id}>
+                <td>
+                  <CharacterEdit originalCharacter={character} onChange={updateCharacter} />
+                </td>
+              </tr>
+            )
+          )
+        }
+      </table>
+
     </div>
   )
 };
