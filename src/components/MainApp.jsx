@@ -68,10 +68,7 @@ export const MainApp = () => {
         <h3>Save Characters</h3>
       </button>
 
-      <table style={{
-        borderCollapse: 'collapse',
-        border: 'none'
-      }}>
+      <table>
         {
           characterList.map(
             (character) => (
