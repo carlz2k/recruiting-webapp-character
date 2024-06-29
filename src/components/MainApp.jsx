@@ -51,6 +51,13 @@ export const MainApp = () => {
     setIsSaving(false);
   }
 
+  const resetData = async () => {
+    setIsSaving(true);
+    await characterService.reset();
+    updateCharacters([]);
+    setIsSaving(false);
+  }
+
   useEffect(() => {
     loadCharacters();
   }, []);
@@ -69,6 +76,10 @@ export const MainApp = () => {
 
       <button onClick={saveCharacter} disabled={isSaving}>
         <h3>Save Characters</h3>
+      </button>
+
+      <button onClick={resetData} disabled={isSaving}>
+        <h3>Reset</h3>
       </button>
       {
         isLoading ? (<div>Loading...</div>) : (<></>)

@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { SKILL_LIST } from "../consts";
 import { SkillCheck } from "./SkillCheck";
 
@@ -17,6 +17,10 @@ export const PartySkillCheck = ({
   const handleOpenWidgetClick = () => {
     openWidget(true);
   };
+
+  const handleOnSkillChange = useCallback((value) => {
+    setSkill(value);
+  }, []);
 
   const _getCharacterWithHighestSkillValue = () => {
     return Object.keys(characters).reduce(
@@ -53,11 +57,7 @@ export const PartySkillCheck = ({
       {
         shouldShowWidget ? (
           <div>
-            <SkillCheck character={character} onSkillChange={
-              (value) => {
-                setSkill(value);
-              }
-            } />
+            <SkillCheck character={character} onSkillChange={handleOnSkillChange} />
           </div>
         ) : (<></>)
       }

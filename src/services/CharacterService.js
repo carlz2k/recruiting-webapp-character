@@ -25,6 +25,10 @@ export class CharacterService {
     return axios.post(CHARACTER_URL, payload);
   }
 
+  async reset() {
+    return this.save([]);
+  }
+
   async getAll() {
     const response = await axios.get(CHARACTER_URL);
     if (response?.data?.body?._collections?.length) {
