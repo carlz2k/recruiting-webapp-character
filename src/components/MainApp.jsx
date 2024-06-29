@@ -17,6 +17,7 @@ export const MainApp = () => {
 
   const [characters, updateCharacters] = useState({});
   const [isSaving, setIsSaving] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   const characterList = useMemo(() => {
     return Object.values(characters);
@@ -32,6 +33,7 @@ export const MainApp = () => {
   }
 
   const loadCharacters = async () => {
+    setIsLoading(true);
     const charactersObject = {};
     const characters = await characterService.getAll();
     characters.forEach(
@@ -40,6 +42,7 @@ export const MainApp = () => {
       }
     )
     updateCharacters(charactersObject);
+    setIsLoading(false);
   }
 
   const saveCharacter = async () => {
@@ -55,7 +58,7 @@ export const MainApp = () => {
   return (
     <div>
       {
-        !!Object.keys(characters)?.length && (
+        !!characterList?.length && (
           <PartySkillCheck characters={characters} />
         )
       }
@@ -67,7 +70,9 @@ export const MainApp = () => {
       <button onClick={saveCharacter} disabled={isSaving}>
         <h3>Save Characters</h3>
       </button>
-
+      {
+        isLoading ? (<div>Loading...</div>) : (<></>)
+      }
       <table>
         {
           characterList.map(
