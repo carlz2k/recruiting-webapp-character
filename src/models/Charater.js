@@ -1,6 +1,6 @@
 import { v4 as uuidv4 } from 'uuid';
 
-import { ATTRIBUTE_LIST, ININITIAL_ATTRIBUTE_POINT, INTELLIGENCE_ATTRIBUTE, INTELLIGENCE_MODIFIER_MULTIPLIER, SKILL_LIST } from "../consts";
+import { ATTRIBUTE_LIST, CLASS_LIST, ININITIAL_ATTRIBUTE_POINT, INTELLIGENCE_ATTRIBUTE, INTELLIGENCE_MODIFIER_MULTIPLIER, SKILL_LIST } from "../consts";
 import { Attribute } from "./Attribute";
 import { Skill } from './Skill';
 
@@ -56,6 +56,19 @@ export class Character {
       (attr) => attr.name === INTELLIGENCE_ATTRIBUTE
     )?.modifier;
     return 10 + INTELLIGENCE_MODIFIER_MULTIPLIER * intelligenceAttributeModifier - this._getTotalSkillPointsSpent();
+  }
+
+  isClass(className) {
+    const classObject = CLASS_LIST[className];
+
+    for (const attrName in classObject) {
+      const attribute = this.attributes.find((attr)=>attr.name === attrName);
+      if (attribute?.points < classObject[attrName]) {
+        return false;
+      }
+    }
+
+    return true;
   }
 
   static clone(original) {

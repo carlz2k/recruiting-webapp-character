@@ -62,8 +62,6 @@ export const MainApp = () => {
         Save Characters
       </button>
 
-      <CharacterClass />
-
       <table style={{
         borderCollapse: 'collapse',
         border: 'none'
