@@ -36,11 +36,14 @@ export class Character {
     }
   }
 
-
-  increaseSkill(skillName, isIncreasing = true) {
-    const skill = this.skills.find(
+  getSkill(skillName) {
+    return this.skills.find(
       (s) => s.name === skillName
     );
+  }
+
+  increaseSkill(skillName, isIncreasing = true) {
+    const skill = this.getSkill(skillName);
 
     skill?.addPoint(isIncreasing);
   }

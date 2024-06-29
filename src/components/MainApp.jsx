@@ -1,14 +1,14 @@
 import { useEffect, useMemo, useState } from "react";
 import { useCharacterService } from "../context/ServicesProvider";
-import { CharacterClass } from "./CharacterClass";
 import { CharacterEdit } from "./CharacterEdit";
+import { PartySkillCheck } from "./PartySkillCheck";
 
 /**
  * the main view
  * 
  * normally I'd like to use a state management library such as Redux
  * for managing states globally, but for a 2 hour exercise, we will just useState
- * to manage states locally
+ * to manage states locally.
  * 
  * @returns main view component
  */
@@ -54,12 +54,18 @@ export const MainApp = () => {
 
   return (
     <div>
+      {
+        !!Object.keys(characters)?.length && (
+          <PartySkillCheck characters={characters} />
+        )
+      }
+
       <button onClick={addNewCharacter}>
-        Add a new character
+        <h3>Add a new character</h3>
       </button>
 
       <button onClick={saveCharacter} disabled={isSaving}>
-        Save Characters
+        <h3>Save Characters</h3>
       </button>
 
       <table style={{

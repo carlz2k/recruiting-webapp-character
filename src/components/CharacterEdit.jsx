@@ -1,7 +1,8 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { CharacterAttributesEdit } from "./CharacterAttributesEdit";
-import { CharacterSkillsEdit } from "./CharacterSkillsEdit";
 import { CharacterClass } from "./CharacterClass";
+import { CharacterSkillsEdit } from "./CharacterSkillsEdit";
+import { SkillCheck } from "./SkillCheck";
 
 export const CharacterEdit = (props) => {
   const [shouldExpand, expand] = useState(false);
@@ -13,24 +14,25 @@ export const CharacterEdit = (props) => {
 
   return (
     <div>
-      <span><h2>{character.name}</h2> <button onClick={() => {
-        expand(!shouldExpand);
-      }}>Expand</button></span>
+      <div>
+        <h2>{character.name}</h2> <button onClick={() => {
+          expand(!shouldExpand);
+        }}>{shouldExpand ? 'Close' : 'Expand'}</button>
+      </div>
       {
         shouldExpand && (
-          <table style={{
-            borderCollapse: 'collapse',
-            border: 'none'
-          }}>
-
-            <tbody>
-              <tr>
-                <td><CharacterAttributesEdit {...props} character={character} /></td>
-                <td><CharacterSkillsEdit {...props} character={character} /></td>
-                <td><CharacterClass character={character} /></td>
-              </tr>
-            </tbody>
-          </table>
+          <div>
+            <table>
+              <tbody>
+                <tr>
+                  <td><CharacterAttributesEdit {...props} character={character} /></td>
+                  <td><CharacterSkillsEdit {...props} character={character} /></td>
+                  <td><CharacterClass character={character} /></td>
+                  <td><SkillCheck character={character} /></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
         )
       }
     </div>
